@@ -1,0 +1,78 @@
+#
+# The Percona Server 5.7 configuration file by denda.hanoi@gmail.com.
+#
+# One can use all long options that the program supports.
+# Run program with --help to get a list of available options and with
+# --print-defaults to see which it would actually understand and use.
+#
+# For explanations see
+# http://dev.mysql.com/doc/mysql/en/server-system-variables.html
+
+[mysqld]
+user   = mysql
+pid-file = /var/run/mysqld/mysqld.pid
+socket   = /var/run/mysqld/mysqld.sock
+port   = 3306
+basedir    = /usr
+datadir    = /var/lib/mysql
+tmpdir   = /tmp
+lc-messages-dir  = /usr/share/mysql
+explicit_defaults_for_timestamp
+
+#Enable utf8_general_ci as default
+character-set-server = utf8
+collation-server = utf8_general_ci
+
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+
+# MyISAM #
+
+key-buffer-size                = 32M
+#myisam-recover                = FORCE,BACKUP
+group_concat_max_len           = 100000
+
+# SAFETY #
+max-allowed-packet             = 16M
+max-connect-errors             = 1000000
+skip-name-resolve
+
+#sql_mode default
+#sql_mode                      = NO_ENGINE_SUBSTITUTION,STRICT_ALL_TABLES # magento1 #
+sql-mode                       = ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_AUTO_VALUE_ON_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_IN_DATE,ONLY_FULL_GROUP_BY # magento 2 #
+sysdate-is-now                 = 1
+innodb                         = FORCE
+
+# DATA STORAGE #
+datadir                        = /var/lib/mysql/
+
+# CACHES AND LIMITS #
+tmp-table-size                 = 64M
+max-heap-table-size            = 64M
+query-cache-type               = 0
+query-cache-size               = 0
+max-connections                = 500
+thread-cache-size              = 50
+open-files-limit               = 65535
+table-definition-cache         = 4096
+table-open-cache               = 4096
+
+# TIMEOUT #
+wait_timeout 				   = 86400
+innodb_lock_wait_timeout       = 1200
+
+
+
+# INNODB #
+innodb-flush-method            = O_DIRECT
+innodb-log-files-in-group      = 2
+innodb-log-file-size           = 512M
+innodb-flush-log-at-trx-commit = 1
+innodb-file-per-table          = 1
+innodb-buffer-pool-size        = 2G
+
+# LOGGING #
+log-error                      = /var/log/mysql/error.log
+log-queries-not-using-indexes  = 0
+#slow-query-log                 = 0
+#slow-query-log-file            = /var/log/mysql/slow.log
